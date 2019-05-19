@@ -119,7 +119,12 @@
                     }
 
                     // 控制树图移动到土地图
-                    if (move_left >= obj_soil_left - tree_width && move_left <= obj_soil_left + obj_soil_width && move_top >= obj_soil_top - tree_height && obj_soil_top <= obj_soil_top + obj_soil_height) {
+                    if (
+                        move_left >= obj_soil_left - tree_width &&
+                        move_left <= obj_soil_left + obj_soil_width &&
+                        move_top >= obj_soil_top - tree_height &&
+                        move_top <= obj_soil_top + obj_soil_height
+                    ) {
                         move_left = obj_soil_left + obj_soil_width / 2 - tree_width / 2;
                         move_top = obj_soil_top + obj_soil_height / 2 - tree_height;
                     }
