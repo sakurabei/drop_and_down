@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>html5_test</title>
+	<style type="text/css">
+	*{
+		margin:0;
+		padding:0;
+		list-style:none;	
+	}
+	
+	/*背景图之间的定位*/
+	.bg_pic{
+		position: absolute;
+		width:1058px;
+		height:595px;
+		border:1px solid #75ABCE;
+		background: url(images/picture1.png);
+		box-shadow: 0 0 16px #75ABCE;
+		top:50%;
+	    left:50%;
+	    margin-top:-297.5px;
+	    margin-left:-529px;
+	}
+		/*土图片的样式*/
+	.soil{
+		position:absolute;
+		width:108px;
+		height:104px;
+		left:50%;
+		top:50%;
+		margin-top:-52px;
+		margin-left:-54px;
+		background:url(images/picture3.png);
+
+	}
+	.tree_border{
+		position:relative;
+		width:808px;
+		height:458px;
+		border:1px solid red;
+		top:50%;
+		left:50%;
+		margin-top:-231px;
+		margin-left:-415px;
+	}
+	/*树的样式*/
+	.tree{
+		position:absolute;
+		width:108px;
+		height:158px;
+		top:10px;
+		left:10px;
+		background:url("images/picture2.png");
+		border:1px solid red;
+		z-index:4;
+
+	}
+	
+	</style>
+	
+	
+</head>
+<body>
+	<div class="bg_pic">
+		<div class="tree_border"><div class="tree"></div>
+		
+		</div>
+		<div class="soil"></div>
+	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".tree").mousedown(function(event){
+			// isMove 判断是否在移动
+			var isMove = true;
+			// 获取数图距离左边和上边的距离
+			var tree_left = $('div.tree').offset().left;
+			var tree_right = $('div.tree').offset().top;
+			// 获取鼠标点击的坐标，与左上角的距离
+			var x =  event.pageX - tree_left; 
+        	var y =  event.pageY - tree_right;
+
+			// console.log('mouse DOWN X: ', x, 'Y:', y);
+
+			$(document).mousemove(function (event) {
+				// var ev = e || event;
+				if (isMove) { 
+                	var obj = $('div.tree'); 
+					// 树的宽度，高度
+					var tree_width = obj.width();
+					var tree_height = obj.height();
+					var obj_treeBorder = $(".tree_border");
+					var obj_bg_pic = $(".bg_pic");
+					// var obj_soil = $(".soil");
+					// 土地的宽度高度，以及土地距离top left 的值
+					// var obj_soil_width =obj_soil.width();
+					// var obj_soil_height =obj_soil.height();
+					// var obj_soil_left = obj_soil.offset().left;
+					// var obj_soil_top = obj_soil.offset().top;
+					// 用于树图 不可以出内边框 treeBorder 使用
+					// var l = obj_treeBorder.offset().left +obj_treeBorder.width();
+					// var t =obj_treeBorder.offset().top +obj_treeBorder.height();
+					// tree_boder 距离边框 bg_pic 的left值，top 值，用于树图不可以溢出 和树图定位到土地图上
+					var tree_border_width = obj_treeBorder.offset().left-obj_bg_pic.offset().left;
+					var tree_border_height = obj_treeBorder.offset().top-obj_bg_pic.offset().top;
+					// 设置的树图的css
+					var move_left = event.pageX  - obj.width()-x-obj_bg_pic.offset().left;
+					var move_top = event.pageY -y- obj.height()-obj_bg_pic.offset().top;
+					// 控制树图不可以出treeBorder
+					// if(move_left < obj_treeBorder.offset().left-obj.width()-tree_border_width){
+					// 	// tree_left = obj_treeBorder.offset().left;
+					// 	move_left=obj_treeBorder.offset().left-obj.width()-tree_border_width;
+					// }else if(move_left > l-obj.width()-tree_border_width-tree_width  ) {
+					// 	move_left =l-obj.width()-tree_border_width-tree_width ;
+					// 	// var x =  event.pageX - $('div.tree').offset().left;
+					// // }
+					// if(move_left >= obj_soil_left -tree_width-tree_border_width- obj.width() && move_left <=obj_soil_left +tree_width+ obj_soil.width() -tree_border_width- obj.width()){
+					// 	move_left=obj_soil_left +obj_soil_width/2-tree_border_width- obj.width()-tree_width/2;
+					// 	move_top=obj_soil_top +obj_soil_height/2-tree_border_height- obj.height()-tree_height;
+
+					// }
+					// if(move_top<obj_treeBorder.offset().left- obj.height()-tree_border_height ){
+					// 	move_top=obj_treeBorder.offset().left- obj.height()-tree_border_height;
+
+					// }else if(move_top >t-obj.height()-tree_border_height-tree_height ){
+					// 	move_top = t-obj.height()-tree_border_height-tree_height;
+					// }
+					// 控制树图移动到土地图
+					
+
+					// var obj_bg_pic_width =obj_bg_pic.width();
+					// var obj_bg_pic_height=obj_bg_pic.height();
+					// console.log(obj_treeBorder.offset().left);
+					// console.log(obj_treeBorder.offset().top);
+					// console.log(obj_bg_pic.offset().left);
+					// console.log(obj_bg_pic.offset().top);
+					
+					// console.log(tree_border_width);
+					// console.log(tree_border_height);
+                	obj.css({'left':move_left,"top":move_top});
+					//console.log('mouse MOVE X: ', x, 'Y:', y);
+					//console.log('mouse MOVE e.pageX: ', e.pageX, 'e.pageY: ', e.pageY);
+					// console.log('mouse MOVE XX: ', e.pageX - x, 'YY: ', e.pageY - y);
+            }
+        	}).mouseup( function () {
+				isMove = false;
+
+        	});
+
+		});
+	});
+	
+</script>
+</body>
+</html>
